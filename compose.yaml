@@ -1,0 +1,27 @@
+services:
+  reasoning:
+    build:
+      context: .
+      args:
+        AGENT_RUNTIME: ${IMAGE_RUNTIME:-all}
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      ADAPTER_API_KEY: ${ADAPTER_API_KEY:?Run guided setup to create the management key}
+      GOOGLE_API_KEY: ${GOOGLE_API_KEY:-}
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      TRANSCRIPT_SOURCE: meetstream
+    command: ["sh", "-c", "meetstream-adapter doctor && exec meetstream-adapter serve --host 0.0.0.0 --port 8080"]
+    ports:
+      - "127.0.0.1:8080:8080"
+    volumes:
+      - adapter-data:/data
+      - ./config.hosted.toml:/app/config.toml:ro
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8080/ready', timeout=3)"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+    stop_grace_period: 60s
+volumes:
+  adapter-data:

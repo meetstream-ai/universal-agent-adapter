@@ -1,0 +1,6 @@
+profile = "adk"
+model = "gemini-3.5-flash-lite"
+model_provider = "google"
+output = "events"
+workspace = "mia"
+ledger = "/data/actions.sqlite"

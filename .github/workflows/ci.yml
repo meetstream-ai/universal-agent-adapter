@@ -1,0 +1,44 @@
+name: SDK conformance
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  portable-core:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    steps:
+      - uses: actions/checkout@v7
+      - uses: astral-sh/setup-uv@v10.3.2
+        with:
+          version: '0.13.5'
+          python-version: '3.12'
+      - run: uv sync --frozen --extra dev --extra quickstart
+      - run: uv run --frozen pytest -q
+      - run: uv run --frozen meetstream-adapter start --mode demo
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '22'
+      - run: node --test --test-timeout=10000 tests/test_native_mia.mjs tests/test_project_commands.mjs
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python: ['3.12', '3.13']
+    steps:
+      - uses: actions/checkout@v7
+      - uses: astral-sh/setup-uv@v10.3.2
+        with:
+          version: '0.13.5'
+          python-version: ${{ matrix.python }}
+      - run: uv sync --frozen --all-extras
+      - run: uv run ruff check src tests scripts examples
+      - run: uv run python scripts/protocol_schema.py --check
+      - run: uv run pytest -q
+      - run: uv run python scripts/benchmark_native.py
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '22'
+      - run: node --test --test-timeout=10000 tests/test_native_mia.mjs tests/test_project_commands.mjs
+      - run: uv build

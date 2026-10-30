@@ -1,0 +1,10 @@
+{
+  "name": "meetstream-agent-adapter",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Command shortcuts for the Python meeting bridge; no npm dependencies",
+  "scripts": {
+    "start": "node scripts/project.mjs start",
+    "stop": "node scripts/project.mjs stop"
+  }
+}

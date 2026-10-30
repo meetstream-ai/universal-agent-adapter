@@ -1,0 +1,215 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:meetstream:agent-adapter:protocol:1",
+  "title": "MeetStream agent adapter protocol v1",
+  "$defs": {
+    "AgentEvent": {
+      "additionalProperties": false,
+      "properties": {
+        "version": {
+          "default": 1,
+          "maximum": 1,
+          "minimum": 1,
+          "title": "Version",
+          "type": "integer"
+        },
+        "session_id": {
+          "title": "Session Id",
+          "type": "string"
+        },
+        "turn_id": {
+          "title": "Turn Id",
+          "type": "string"
+        },
+        "generation": {
+          "title": "Generation",
+          "type": "integer"
+        },
+        "event_id": {
+          "title": "Event Id",
+          "type": "string"
+        },
+        "sequence": {
+          "title": "Sequence",
+          "type": "integer"
+        },
+        "type": {
+          "$ref": "#/$defs/EventType"
+        },
+        "payload": {
+          "additionalProperties": true,
+          "title": "Payload",
+          "type": "object"
+        }
+      },
+      "required": [
+        "session_id",
+        "turn_id",
+        "generation",
+        "sequence",
+        "type"
+      ],
+      "title": "AgentEvent",
+      "type": "object"
+    },
+    "Capabilities": {
+      "additionalProperties": false,
+      "properties": {
+        "incremental_text": {
+          "default": true,
+          "title": "Incremental Text",
+          "type": "boolean"
+        },
+        "shared_tools": {
+          "default": true,
+          "title": "Shared Tools",
+          "type": "boolean"
+        },
+        "cancellation": {
+          "default": "cooperative",
+          "title": "Cancellation",
+          "type": "string"
+        },
+        "state_strategy": {
+          "default": "bounded_common_history",
+          "title": "State Strategy",
+          "type": "string"
+        }
+      },
+      "title": "Capabilities",
+      "type": "object"
+    },
+    "EventType": {
+      "enum": [
+        "turn.started",
+        "assistant.text.delta",
+        "assistant.message.completed",
+        "tool.started",
+        "tool.completed",
+        "tool.failed",
+        "turn.completed",
+        "turn.cancelled",
+        "turn.failed",
+        "runtime.switched"
+      ],
+      "title": "EventType",
+      "type": "string"
+    },
+    "SessionContext": {
+      "additionalProperties": false,
+      "properties": {
+        "version": {
+          "default": 1,
+          "maximum": 1,
+          "minimum": 1,
+          "title": "Version",
+          "type": "integer"
+        },
+        "session_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "title": "Session Id",
+          "type": "string"
+        },
+        "workspace": {
+          "maxLength": 128,
+          "minLength": 1,
+          "title": "Workspace",
+          "type": "string"
+        },
+        "bot_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "title": "Bot Id",
+          "type": "string"
+        },
+        "profile": {
+          "maxLength": 64,
+          "minLength": 1,
+          "title": "Profile",
+          "type": "string"
+        },
+        "trace_id": {
+          "title": "Trace Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "session_id",
+        "workspace",
+        "bot_id",
+        "profile"
+      ],
+      "title": "SessionContext",
+      "type": "object"
+    },
+    "Turn": {
+      "additionalProperties": false,
+      "properties": {
+        "turn_id": {
+          "maxLength": 128,
+          "minLength": 1,
+          "title": "Turn Id",
+          "type": "string"
+        },
+        "event_id": {
+          "maxLength": 256,
+          "minLength": 1,
+          "title": "Event Id",
+          "type": "string"
+        },
+        "text": {
+          "maxLength": 16000,
+          "minLength": 1,
+          "title": "Text",
+          "type": "string"
+        },
+        "speaker": {
+          "default": "Participant",
+          "maxLength": 256,
+          "title": "Speaker",
+          "type": "string"
+        },
+        "speaker_id": {
+          "anyOf": [
+            {
+              "maxLength": 128,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Speaker Id"
+        },
+        "timestamp": {
+          "minimum": 0,
+          "title": "Timestamp",
+          "type": "number"
+        }
+      },
+      "required": [
+        "event_id",
+        "text",
+        "timestamp"
+      ],
+      "title": "Turn",
+      "type": "object"
+    }
+  },
+  "oneOf": [
+    {
+      "$ref": "#/$defs/AgentEvent"
+    },
+    {
+      "$ref": "#/$defs/Turn"
+    },
+    {
+      "$ref": "#/$defs/SessionContext"
+    },
+    {
+      "$ref": "#/$defs/Capabilities"
+    }
+  ]
+}

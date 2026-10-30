@@ -1,0 +1,41 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "meetstream-agent-adapter"
+version = "0.1.0"
+description = "A common streaming turn and tool boundary for external meeting agents"
+readme = "README.md"
+requires-python = ">=3.12,<3.14"
+dependencies = ["pydantic>=2.12,<3", "jsonschema>=4.25,<5", "httpx>=0.28,<1", "fastapi>=0.120,<1", "uvicorn>=0.38,<1", "websockets>=15,<17", "meetstream-sdk==1.0.0", "python-dotenv>=1,<2", "certifi>=2026.10.19"]
+
+[project.optional-dependencies]
+quickstart = ["ngrok==1.7.0"]
+openai = ["openai-agents==0.20.0"]
+langgraph = ["langgraph==1.2.16", "langchain-openai==1.7.2", "langchain-google-genai==4.4.2"]
+adk = ["google-adk==2.12.0"]
+crewai = ["crewai==1.15.28"]
+dev = ["pytest>=8,<10", "pytest-asyncio>=1,<2", "ruff>=0.14,<1"]
+
+[project.scripts]
+meetstream-adapter = "meetstream_agent_adapter.cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/meetstream_agent_adapter"]
+
+[tool.hatch.build.targets.sdist]
+include = ["/src", "/tests", "/scripts", "/examples", "/docs", "/README.md", "/quickstart.md", "/pyproject.toml", "/uv.lock", "/config.toml", "/config.hosted.toml", "/compose.yaml", "/start.command", "/start.bat", "/package.json", "/Dockerfile", "/.dockerignore", "/.gitignore", "/.env.example", "/.github"]
+exclude = ["**/session.json", "**/*.session.json"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+
+[tool.ruff]
+target-version = "py312"
+line-length = 110
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "ASYNC"]
+ignore = ["E501"]

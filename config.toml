@@ -1,0 +1,16 @@
+profile = "openai"
+model = "gpt-4.1-mini"
+workspace = "adapter-demo"
+output = "voice_and_chat"
+wake_words = ["hey assistant", "hey bot"]
+followup_seconds = 30
+turn_timeout = 60
+max_sessions = 8
+session_ttl = 3600
+reconnect_grace = 15
+ledger = "actions.sqlite"
+speech_model = "tts-1"
+speech_voice = "alloy"
+
+# PUBLIC_BASE_URL environment variable supplies an HTTPS origin.
+# Change AGENT_RUNTIME to openai, langgraph, adk or crewai; application is unchanged.

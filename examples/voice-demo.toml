@@ -1,0 +1,16 @@
+# One common application; change AGENT_RUNTIME and AGENT_MODEL only.
+profile = "adk"
+model = "gemini-3.5-flash-lite"
+workspace = "adapter-demo"
+output = "voice_and_chat"
+transcript_source = "deepgram"
+speech_provider = "deepgram"
+speech_model = "aura-2-thalia-en"
+wake_words = ["hey assistant", "hey bot", "okay assistant"]
+followup_seconds = 30
+turn_timeout = 60
+waiting_room_timeout = 180
+session_ttl = 3600
+max_sessions = 8
+reconnect_grace = 15
+ledger = "actions.sqlite"

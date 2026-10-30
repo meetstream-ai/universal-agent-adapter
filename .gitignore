@@ -1,0 +1,17 @@
+.venv/
+__pycache__/
+.pytest_cache/
+.ruff_cache/
+.env
+.env.*
+!.env.example
+*.sqlite*
+dist/
+build/
+*.egg-info/
+# Reports include private meeting evidence; publish only explicitly reviewed copies.
+reports/
+session.json
+*.session.json
+.sessions/
+.adapter/

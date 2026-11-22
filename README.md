@@ -2,6 +2,14 @@
 
 Connect a MeetStream MIA agent to **OpenAI Agents SDK, Google ADK, CrewAI or LangGraph**, and switch between them during a meeting. The bridge handles runtime selection, shared tools, cancellation and conversation context. MeetStream retains meeting presence, audio transport and chat. The default bridge shares one speech pipeline across all runtimes; hosted MIA tool mode retains its existing voice pipeline.
 
+## Where this fits
+
+This repository is a local pilot. For new work, use the maintained paths for an agent in the meeting ([Integration paths](https://docs.meetstream.ai/guides/introduction/integration-paths)):
+
+- **Your own stack, bridge server:** the bot streams live audio to your server and takes audio, chat and images back. See [Bridge server architecture](https://docs.meetstream.ai/guides/websockets/bridge-server-architecture) and the [MeetStream Bridge](https://github.com/meetstream-ai/meetstream-agent) starter.
+- **Your own agent as the brain:** Claude Code, Codex, Hermes, OpenClaw and others through the [MeetStream Agent Kit](https://github.com/meetstream-ai/agent-kit) (`model.provider: "local_agent"`).
+- **MeetStream hosts the agent:** the Agents API (MIA). See [Voice agent pricing and keys](https://docs.meetstream.ai/guides/mia/pricing-and-keys).
+
 ## Scope 
 
 Build one standard adapter layer instead of a bespoke bridge for every framework, generalizing the integration approach used for Hermes, OpenClaw and Grok. The initial integrations are **OpenAI Agents SDK, Google ADK, CrewAI and LangGraph**; those earlier integrations are context, not additional adapters in this release. Each external framework runs its reasoning and tools behind one common transport and tool interface. This pilot supplies bounded shared conversation history; framework-private checkpoints and persistent memory are not retained between turns or migrated between runtimes.

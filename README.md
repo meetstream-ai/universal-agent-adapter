@@ -4,11 +4,10 @@ Connect a MeetStream MIA agent to **OpenAI Agents SDK, Google ADK, CrewAI or Lan
 
 ## Where this fits
 
-This repository is a local pilot. For new work, use the maintained paths for an agent in the meeting ([Integration paths](https://docs.meetstream.ai/guides/introduction/integration-paths)):
+This repository is a local pilot. For new work, use the MeetStream build tracks for an agent in the meeting ([Integration paths](https://docs.meetstream.ai/guides/introduction/integration-paths)):
 
-- **Your own stack, bridge server:** the bot streams live audio to your server and takes audio, chat and images back. See [Bridge server architecture](https://docs.meetstream.ai/guides/websockets/bridge-server-architecture) and the [MeetStream Bridge](https://github.com/meetstream-ai/meetstream-agent) starter.
-- **Your own agent as the brain:** Claude Code, Codex, Hermes, OpenClaw and others through the [MeetStream Agent Kit](https://github.com/meetstream-ai/agent-kit) (`model.provider: "local_agent"`).
-- **MeetStream hosts the agent:** the Agents API (MIA). See [Voice agent pricing and keys](https://docs.meetstream.ai/guides/mia/pricing-and-keys).
+- **Track 2, bridge server (your own stack, local):** the bot streams live audio to your server and takes audio, chat and images back. See [Bridge server architecture](https://docs.meetstream.ai/guides/websockets/bridge-server-architecture) and the [MeetStream Bridge](https://github.com/meetstream-ai/meetstream-agent) starter.
+- **Track 3, Agents API infra (MIA, hosted by MeetStream):** 3a MeetStream's own, default keys or 3c your own keys. See [Voice agent pricing and keys](https://docs.meetstream.ai/guides/mia/pricing-and-keys). Coming soon, not available yet: 3b bring your own agent infra (LiveKit) and 3d local agent (your own agent CLI through the [MeetStream Agent Kit](https://github.com/meetstream-ai/agent-kit), `model.provider: "local_agent"`).
 
 ## Scope 
 
